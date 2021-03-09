@@ -34,7 +34,45 @@ const App = () => (
       />
     </View>
     <Separator />
-    
+    <View>
+      <Button
+        title="Monitor Patients Current Progress"
+        color="#3E999E"
+        onPress={() => Alert.alert('Cannot press this one')}
+      />
+    </View>
+    <Separator />
+    <View>
+      <Button
+        title="Patients Personal Details"
+        color="#54BD8A"
+        onPress={() => Alert.alert('Cannot press this one')}
+      />
+    </View>
+    <Separator />
+    <View>
+      <Button
+        title="Tutorials"
+        color="#32CDA8"
+        onPress={() => Alert.alert('Cannot press this one')}
+      />
+    </View>
+    <Separator />
+    <View>
+      <Button
+        title="About Us"
+        color="#28C9BF"
+        onPress={() => Alert.alert('Cannot press this one')}
+      />
+    </View>
+    <Separator />
+    <View>
+      <Button
+        title="Log out"
+        color="#33DCD2"
+        onPress={() => Alert.alert('Cannot press this one')}
+      />
+    </View>
     <Separator />
     
   </SafeAreaView>
