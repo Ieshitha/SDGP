@@ -34,6 +34,38 @@ const App = () => (
       />
     </View>
     <Separator />
+    <View>
+      <Button
+        title="Tutorial 2"
+        color="#3E999E"
+        onPress={() => Alert.alert('Cannot press this one')}
+      />
+    </View>
+    <Separator />
+    <View>
+      <Button
+        title="Tutorial 3"
+        color="#32CDA8"
+        onPress={() => Alert.alert('Cannot press this one')}
+      />
+    </View>
+    <Separator />
+    <View>
+      <Button
+        title="Tutorial 4"
+        color="#33DCD2"
+        onPress={() => Alert.alert('Cannot press this one')}
+      />
+    </View>
+    <Separator />
+    <View>
+      <Button
+        title="Tutorial 5"
+        color="#19EEE1"
+        onPress={() => Alert.alert('Cannot press this one')}
+      />
+    </View>
+    <Separator />
     
   </SafeAreaView>
 );
