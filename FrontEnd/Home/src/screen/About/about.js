@@ -22,4 +22,22 @@ export default function About() {
   );
 }
 
-
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      fontSize: 34,
+      backgroundColor: '#270264',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    setFontSize: {
+      fontSize: 40,
+      fontWeight : 'bold' 
+    },
+    setFontSize2: {
+      fontSize: 20 
+    },
+    setColorWhite : {
+      color: '#ffffff'
+    },
+  });
