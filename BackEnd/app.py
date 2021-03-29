@@ -1,51 +1,131 @@
-from flask import Flask, request, render_template, redirect
+from flask import Flask,jsonify,request
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Column,Integer,String,Float
 import os
-import sqlite3
+import base64
+from flask_marshmallow import Marshmallow
+from flask_jwt_extended import JWTManager,jwt_required,create_access_token
 
 
-currentlocation = os.path.dirname(os.path.abspath("DATABASE"))
-
-myapp = Flask(__name__)
-
-
-@myapp.route('/')
-def homepage():
-    return render_template('homepage.html')
+app = Flask(__name__)
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' +os.path.join(basedir,'users.db')
+app.config['JWT_SECRET_KEY']='super-secret'
 
 
-@myapp.route("/", methods =["POST"])
-def checkloging():
-    UN = request.form['Username']
-    PW = request.form['Password']
+db = SQLAlchemy(app)
+ma = Marshmallow(app)
+jwt = JWTManager(app)
 
-    sqlconnection = sqlite3.Connection(currentlocation+"\logging.db")
-    cursor = sqlconnection.cursor()
-    queary1 = "SELECT UserName, Password From Users WHERE UserName={un} AND Password = {pw}".format(un=UN,pw =PW)
 
-    rows = cursor.execute(queary1)
-    rows =rows.fetchall()
-    if len(rows) ==1:
-        return render_template("LoggedIn.html")
-        print("Succed")
+@app.cli.command('db_create')
+def db_create():
+    db.create_all()
+    print('Database Created')
+
+
+@app.cli.command('db_drop')
+def db_drop():
+    db.drop_all()
+    print('Database dropped')
+
+
+@app.cli.command('db_seed')
+def db_seed():
+    uthpala = User(f_name='uthpala',
+                   l_name='bandara',
+                   email='uthpala@gmail.com',
+                   password='uthpala@123')
+
+
+    chamodya = User(f_name='chamodya',
+                   l_name='lekam',
+                   email='chamodya@gmail.com',
+                   password='chamodya@123')
+
+    db.session.add(uthpala)
+    db.session.add(chamodya)
+    db.session.commit()
+    print('Database seeded')
+
+
+#user Register API
+@app.route('/register',methods=['POST'])
+def register():
+    email = request.json['email']
+    test = User.query.filter_by(email=email).first()
+    if test:
+        return jsonify(message='email already exists')
     else:
-        return redirect("/register")
-        print("Error")
+        f_name=request.json['f_name']
+        l_name=request.json['f_name']
+        password=request.json['password']
+        user=User(f_name=f_name,l_name=l_name,email=email,password=password)
+        db.session.add(user)
+        db.session.commit()
+        return jsonify(message="User Created successfully")
 
 
-@myapp.route("/register",methods=["GET","POST"])
-def registerpage():
-    if request.method == "POST":
-        newuser = request.form['newUserName']
-        newpw = request.form['newPassword']
-        newEmail = request.form['newEmail']
-        sqlconnection = sqlite3.Connection(currentlocation+"\logging.db")
-        cursor = sqlconnection.cursor()
-        query2 = "INSERT INTO Users VALUES('{newuser}','{newpw}','{newEmail}')".format(newuser = newuser,newpw =newpw,newEmail = newEmail)
-        cursor.execute(query2)
-        sqlconnection.commit()
-        return redirect("/")
-    return render_template("Register.html")
+#User Loging API
+@app.route('/login',methods=['POST'])
+def login():
+    if request.is_json:
+        email = request.json['email']
+        password = request.json['password']
+    else:
+        email = request.form['email']
+        password = request.form['password']
+
+    test = User.query.filter_by(email=email,password=password).first()
+    if test:
+        access_token = create_access_token(identity=email)
+        return jsonify(message="login succeeded", access_token=access_token)
+    else:
+        return jsonify(message="enter Again"),401
+
+#Voice Record API
+@app.route('/voicerecord',methods=['POST'])
+def voicerecord():
+    encodedVoice = request.json['voicenote']
+    #decodedVoice = base64.b64decode(encodedVoice)
+    #result = open('voice.wav','wb')
+    wav_file = open("temp5.wav", "wb")
+    decord_file = base64.b64decode(encodedVoice)
+    wav_file.write(decord_file)
+    return jsonify(message="Done")
+
+
+
+#Profile API
+@app.route('/profile',methods=['GET'])
+
+
+
+
+#Result API
+@app.route('/result')
+
+
+
+#database models
+class User(db.Model):
+    _tablename_ ='Users'
+    id = Column(Integer,primary_key=True)
+    f_name = Column(String)
+    l_name =Column(String)
+    email = Column(String,unique=True)
+    password = Column(String)
+
+
+
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ('id','f_name','l_name','email','password')
+
+
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
 
 
 if __name__ == '__main__':
-    myapp.run()
+    app.run()
