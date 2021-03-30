@@ -70,6 +70,39 @@ const App = () => (
   </SafeAreaView>
 );
 
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    marginHorizontal: 16,
+  },
+  title: {
+    textAlign: 'center',
+    marginVertical: 8,
+  },
+  fixToText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  separator: {
+    marginVertical: 8,
+    borderBottomColor: '#737373',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  setColorLBlue : {
+    color: '#4668E0'
+  },
+  setColorB : {
+    color: '#3857C6'
+  },
+  setFontSize: {
+    fontSize: 40,
+    fontWeight : 'bold' 
+  },
+  title1: {
+    textAlign: 'left',
+    marginVertical: 8,
+  },
+});
 
 export default App;
