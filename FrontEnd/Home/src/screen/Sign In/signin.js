@@ -17,15 +17,15 @@ const submit = () => {
 
     if(Password===ConfirmPassword){
 
-        fetch('http://127.0.0.1:5000/', {
+        fetch('http://127.0.0.1:5000/login', {
          method: 'POST',
         headers: {
         Accept: 'application/json',
       'Content-Type': 'application/json'
     },
         body: JSON.stringify({
-        Username: 'Some Name',
-        Password: 123
+        Email: 'Some Name',
+        Password: '123'
     })
   });
     }
