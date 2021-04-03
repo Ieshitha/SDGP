@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from './src/views/home/Home';
 import AboutScreen from './src/views/about/about';
 import SignInScreen from './src/views/sign-in/SignIn';
+import LoadingScreen from './src/views/loading/loading';
 import 'react-native-gesture-handler';
 // import { createStackNavigator, createAppContainer } from "react-navigation";
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,6 +20,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name="SignIn" component={SignInScreen} />
+        <Stack.Screen name="Loading" component={LoadingScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
     
