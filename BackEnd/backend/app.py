@@ -5,9 +5,13 @@ import os
 import base64
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager,jwt_required,create_access_token
+import pickle
 
 
 app = Flask(__name__)
+with open('text_classifier', 'rb') as training_model:
+        clf = pickle.load(training_model)
+        print(clf.predict([[1]*333]))
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' +os.path.join(basedir,'users.db')
 app.config['JWT_SECRET_KEY']='super-secret'
