@@ -12,7 +12,7 @@ import { APP_DOMAIN } from '../../util/Constants';
 export default class Login extends Component {
 
     state = {
-        password: '', email: '',
+         email: '',password: '',
     }
     onChangeText = (e, name) => {
         console.log(e.nativeEvent)
@@ -27,7 +27,14 @@ export default class Login extends Component {
 
         fetch(APP_DOMAIN + "login", {
             method: "POST",
-            body: obj
+            headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+            body: JSON.stringify({
+                "email":obj.email,
+                "password": obj.password,
+            })
         })
             .then(res => {
                 console.log(res);
