@@ -6,12 +6,13 @@ import base64
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager,jwt_required,create_access_token
 import pickle
-
-
+import sklearn
+import sklearn.tree.tree
+from joblib import load
 app = Flask(__name__)
 with open('text_classifier', 'rb') as training_model:
-        clf = pickle.load(training_model)
-        print(clf.predict([[1]*333]))
+    clf = pickle.load(training_model)
+    print(clf.predict([[1]*240]))
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' +os.path.join(basedir,'users.db')
 app.config['JWT_SECRET_KEY']='super-secret'
@@ -38,13 +39,13 @@ def db_drop():
 def db_seed():
     uthpala = User(f_name='uthpala',
                    l_name='bandara',
-                   email='uthpala@gmail.com',
+                   email='lekam@gmail.com',
                    password='uthpala@123')
 
 
     chamodya = User(f_name='chamodya',
                    l_name='lekam',
-                   email='chamodya@gmail.com',
+                   email='bandara@gmail.com',
                    password='chamodya@123')
 
     db.session.add(uthpala)
@@ -83,7 +84,9 @@ def login():
     test = User.query.filter_by(email=email,password=password).first()
     if test:
         access_token = create_access_token(identity=email)
+        print(access_token)
         return jsonify(message="login succeeded", access_token=access_token)
+        print("login succeeded")
     else:
         return jsonify(message="enter Again"),401
 
@@ -104,11 +107,8 @@ def voicerecord():
 @app.route('/profile',methods=['GET'])
 
 
-
-
 #Result API
 @app.route('/result')
-
 
 
 #database models
@@ -119,7 +119,6 @@ class User(db.Model):
     l_name =Column(String)
     email = Column(String,unique=True)
     password = Column(String)
-
 
 
 class UserSchema(ma.Schema):

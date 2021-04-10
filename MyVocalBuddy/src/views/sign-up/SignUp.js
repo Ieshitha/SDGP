@@ -29,18 +29,18 @@ export default class SignUp extends React.Component {
             <View style={styles.container}>
                 <TextInput
                     style={styles.input}
-                    placeholder='Full Name:'
+                    placeholder='First Name:'
                     autoCapitalize="none"
                     placeholderTextColor='white'
-                    onChangeText={val => this.onChangeText('username', val)}
+                    onChangeText={val => this.onChangeText('firstname', val)}
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder='Age:'
+                    placeholder='Last Name:'
                     secureTextEntry={true}
                     autoCapitalize="none"
                     placeholderTextColor='white'
-                    onChangeText={val => this.onChangeText('age', val)}
+                    onChangeText={val => this.onChangeText('lastame', val)}
                 />
                 <TextInput
                     style={styles.input}
@@ -51,10 +51,24 @@ export default class SignUp extends React.Component {
                 />
                 <TextInput
                     style={styles.input}
+                    placeholder='Age'
+                    autoCapitalize="none"
+                    placeholderTextColor='white'
+                    onChangeText={val => this.onChangeText('age', val)}
+                />
+                 <TextInput
+                    style={styles.input}
                     placeholder='Email'
                     autoCapitalize="none"
                     placeholderTextColor='white'
                     onChangeText={val => this.onChangeText('email', val)}
+                />
+                 <TextInput
+                    style={styles.input}
+                    placeholder='Password'
+                    autoCapitalize="none"
+                    placeholderTextColor='white'
+                    onChangeText={val => this.onChangeText('password', val)}
                 />
                 <Button
                     title='Sign Up'
@@ -80,6 +94,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
+        backgroundColor: '#270264',
         alignItems: 'center'
     }
 })
