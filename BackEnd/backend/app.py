@@ -3,21 +3,22 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column,Integer,String,Float
 import os
 import base64
+import json
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager,jwt_required,create_access_token
 import pickle
 #import librosa
-#import speech_recognition as sr
+import speech_recognition as sr
 import os
 #import numpy as np
 #import sklearn
 #import sklearn.tree.tree
 from joblib import load
-app = Flask(__name__)
+app = Flask(_name_)
 # with open('text_classifier.pickle', 'rb') as training_model:
 #     clf = pickle.load(training_model)
 #     print(clf.predict([[1]*240]))
-basedir = os.path.abspath(os.path.dirname(__file__))
+basedir = os.path.abspath(os.path.dirname(_file_))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' +os.path.join(basedir,'users.db')
 app.config['JWT_SECRET_KEY']='super-secret'
 
@@ -97,32 +98,88 @@ def login():
 #Voice Record API
 @app.route('/voicerecord',methods=['POST'])
 def voicerecord():
-    encodedVoice = request.json['voicenote']
+    # encodedVoice = request.json['voicenote']
     #decodedVoice = base64.b64decode(encodedVoice)
     #result = open('voice.wav','wb')
     wav_file = open("temp5.wav", "wb")
-    decord_file = base64.b64decode(encodedVoice)
-    wav_file.write(decord_file)
-    token = [[1, 2, 3, 4, 2, 3, 5, 6, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 2, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 3, 12, 28, 29, 30, 31, 3, 32, 33, 34, 35, 35, 36, 2, 3, 11, 37, 38, 37, 37, 39, 40, 41, 41, 42, 43, 37, 44, 45, 33, 46, 3, 47, 43, 37, 48, 2, 49, 50, 37, 44, 51, 52, 53, 53, 54, 55, 37, 56, 57, 37, 57, 58, 59, 60, 61, 62, 63, 3, 11, 64, 65, 66, 60, 60, 13, 31, 67, 68, 69, 37, 70, 71, 72, 31, 73, 74, 2, 75, 72, 31, 76, 77, 43, 77, 3, 78, 79, 33, 80, 33, 81, 82, 12, 12, 12, 83, 84, 85, 86, 87, 43, 88, 28, 60, 89, 90, 91, 3, 92, 3, 93, 2, 3, 94, 95, 61, 96, 37, 97, 31, 67, 98, 3, 99, 2, 3, 100, 2, 3, 101, 88, 28, 102, 89, 35, 103, 104, 105, 43, 106, 107, 108, 2, 109, 110, 37, 111, 112, 107, 113, 114, 114, 115, 116, 107, 117, 118, 107, 119, 33, 3, 120, 121, 107, 122, 43, 107, 123, 124, 37, 56, 125, 126, 33, 3, 127, 43, 128, 2, 129, 112, 130, 131, 132, 3, 133, 3, 134, 2, 3, 135, 12, 136, 3, 137, 130, 138, 71, 139, 140, 3, 110, 140, 3, 141, 2, 3, 142]]
+    # decord_file = base64.b64decode(encodedVoice)
+    # wav_file.write(decord_file)
+
+    train_audio_path = "C:/Users/uthpa/Documents/GitHub/Haxmas_SlashHackers/BackEnd/backend/PR3.wav"
+    x=[]
+
+    # def get_file_paths(dirname):
+    #     file_paths = []
+    #     for root, directories, files in os.walk(dirname):
+    #         for filename in files:
+    #             filepath = os.path.join(root, filename)
+    #             file_paths.append(filepath)
+    #             print("loading files")
+    #     return file_paths
+
+    def recognize_multiple(file):
+        r = sr.Recognizer()
+        with sr.WavFile(file) as source:  # use "test.wav" as the audio source
+            audio = r.record(source)  # extract audio data from the file
+            print("In Recognize_multiple method")
+
+            # r = sr.Recognizer()
+            # with sr.Microphone() as source:
+            #     print("Say something!")
+            #     audio = r.listen(source)
+        try:
+            # print("lol")
+            print("Transcription: " + r.recognize_google(audio))  # recognize speech using Google Speech Recognition
+            sentence = r.recognize_google(audio)
+            tokens = list(sentence.lower().split())
+            print(len(tokens))
+
+            vocab, index = {}, 1
+            vocab['<pad>'] = 0  # add a padding token
+            for token in tokens:
+                if token not in vocab:
+                    vocab[token] = index
+                    index += 1
+            vocab_size = len(vocab)
+            print(vocab)
+
+            inverse_vocab = {index: token for token, index in vocab.items()}
+            print(inverse_vocab)
+
+            example_sequence = [vocab[word] for word in tokens]
+            print(example_sequence)
+
+            x.append(example_sequence)
+            X = [i + [0] * (240 - len(i)) for i in x]
+            return X
+        except sr.UnknownValueError:
+            print("Google Speech Recognition could not understand audio")
+        except sr.RequestError as e:  # speech is unintelligible
+            print("Could not request results from Google Speech Recognition service; {0}".format(e))
+
+    file=train_audio_path
+    (filepath, ext) = os.path.splitext(file)  # get the file extension
+    file_name = os.path.basename(file)  # get the basename for writing to output file
+    print(file_name)  # only interested if extension is '.wav'
+    X = recognize_multiple(file)
+
     with open('text_classifier.pickle', 'rb') as training_model:
         clf = pickle.load(training_model)
-        result= clf.predict(token)
+        result= clf.predict(X)
         print(result)
-    return jsonify(message="result")
+    return jsonify(message=result[0])
 
+#Result API
+@app.route('/result', methods=['GET'])
 
 
 #Profile API
 @app.route('/profile',methods=['GET'])
 
 
-#Result API
-@app.route('/result')
-
-
 #database models
 class User(db.Model):
-    _tablename_ ='Users'
+    tablename ='Users'
     id = Column(Integer,primary_key=True)
     f_name = Column(String)
     l_name =Column(String)
@@ -139,5 +196,5 @@ user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     app.run()
