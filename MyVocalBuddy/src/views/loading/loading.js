@@ -1,29 +1,57 @@
 import React from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
+import { StyleSheet, Button, View, SafeAreaView, Text, Alert, Image } from 'react-native';
 
 const Separator = () => (
     <View style={styles.separator} />
 );
+const [type, setType] = useState("");
+const [loading, setLoading] = useState(false);
 
-const Home = ({ navigation }) => (
-   
+const handleSubmit = () => {
+    
+    setLoading(true);
+    let obj = {type: type};
+    console.log(obj);
+    navigation.navigate("Home")
+    fetch(APP_DOMAIN + "Loading", {
+        method: "GET",
+        headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+        body: JSON.stringify({
+            "type":obj.type,
+        })
+    })
+        .then(res => {
+            console.log(res);
+        }).catch(err => {
+            alert(JSON.stringify(err));
+            console.log('Error -', err, err.message);
+        });
+    }
+
+const Loading = ({ navigation }) => (
     <SafeAreaView style={styles.container}>
         
         <View>
+        <Image
+  source={require('../../assets/logo.jpeg')}
+    style={styles.image} />
             <Text style={[styles.title1, styles.setColorLBlue]}>
-                aaaaaaaaaaa
+                {/* Type :{[this.state.data.approvedTime]} */}
+                
       </Text>
         </View>
         <Separator />
         <View>
-            <Text style={styles.title}>
-
+            <Text style={[styles.title1, styles.setColorWhite, styles.setFontSize]}>
+                Stutter Type :
             </Text>
             <Button
                 title="Continue"
                 color="#396F81"
-                onPress={() => (
-                    navigation.navigate("Home"))}
+                onPress={handleSubmit}
             />
         </View>
         <Separator />
@@ -50,6 +78,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
+    image: {
+        marginBottom: 80,
+        marginLeft:80,
+         width: 200,
+        height: 200, 
+        borderRadius: 100,
+      },
     separator: {
         marginVertical: 8,
         borderBottomColor: '#737373',
@@ -62,9 +97,9 @@ const styles = StyleSheet.create({
         color: '#ffffff'
     },
     setFontSize: {
-        fontSize: 40,
+        fontSize: 20,
         fontWeight: 'bold'
     },
 });
 
-export default Home;
+export default Loading;
