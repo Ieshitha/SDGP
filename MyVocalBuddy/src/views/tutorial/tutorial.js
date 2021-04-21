@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
+import tuteOne from '../tuteOne/tuteOne';
 
 const Separator = () => (
   <View style={styles.separator} />
@@ -30,7 +31,8 @@ const App = () => (
       <Button
         title="Tutorial 1"
         color="#396F81"
-        onPress={() => Alert.alert('Button with adjusted color pressed')}
+        onPress={() => (
+          navigation.navigate("TuteOne"))}
       />
     </View>
     <Separator />
@@ -38,7 +40,8 @@ const App = () => (
       <Button
         title="Tutorial 2"
         color="#3E999E"
-        onPress={() => Alert.alert('Cannot press this one')}
+        onPress={() => (
+          navigation.navigate("TuteTwo"))}
       />
     </View>
     <Separator />
@@ -46,7 +49,8 @@ const App = () => (
       <Button
         title="Tutorial 3"
         color="#32CDA8"
-        onPress={() => Alert.alert('Cannot press this one')}
+        onPress={() => (
+          navigation.navigate("TuteThree"))}
       />
     </View>
     <Separator />
@@ -54,7 +58,8 @@ const App = () => (
       <Button
         title="Tutorial 4"
         color="#33DCD2"
-        onPress={() => Alert.alert('Cannot press this one')}
+        onPress={() => (
+          navigation.navigate("TuteFour"))}
       />
     </View>
     <Separator />
@@ -62,7 +67,7 @@ const App = () => (
       <Button
         title="Tutorial 5"
         color="#19EEE1"
-        onPress={() => Alert.alert('Cannot press this one')}
+        onPress={() => ( navigation.navigate("TuteFive"))}
       />
     </View>
     <Separator />
@@ -105,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Tutorials;
