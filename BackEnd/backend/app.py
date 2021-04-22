@@ -1,23 +1,17 @@
 from flask import Flask,jsonify,request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column,Integer,String,Float
-import os
-import base64
-import json
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager,jwt_required,create_access_token
 import pickle
-#import librosa
 import speech_recognition as sr
 import os
-#import numpy as np
-#import sklearn
-#import sklearn.tree.tree
-from joblib import load
+import base64
+
+
 app = Flask(_name_)
-# with open('text_classifier.pickle', 'rb') as training_model:
-#     clf = pickle.load(training_model)
-#     print(clf.predict([[1]*240]))
+
+
 basedir = os.path.abspath(os.path.dirname(_file_))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' +os.path.join(basedir,'users.db')
 app.config['JWT_SECRET_KEY']='super-secret'
@@ -98,24 +92,15 @@ def login():
 #Voice Record API
 @app.route('/voicerecord',methods=['POST'])
 def voicerecord():
-    # encodedVoice = request.json['voicenote']
-    #decodedVoice = base64.b64decode(encodedVoice)
-    #result = open('voice.wav','wb')
-    wav_file = open("temp5.wav", "wb")
-    # decord_file = base64.b64decode(encodedVoice)
-    # wav_file.write(decord_file)
+    encodedVoice = request.json['voicenote']
+    # print(encodedVoice)
+    wav_file = open("voice.wav", "wb")
+    decord_file = base64.b64decode(encodedVoice)
+    wav_file.write(decord_file)
 
-    train_audio_path = "C:/Users/uthpa/Documents/GitHub/Haxmas_SlashHackers/BackEnd/backend/PR3.wav"
+    train_audio_path = "voice.wav"
     x=[]
 
-    # def get_file_paths(dirname):
-    #     file_paths = []
-    #     for root, directories, files in os.walk(dirname):
-    #         for filename in files:
-    #             filepath = os.path.join(root, filename)
-    #             file_paths.append(filepath)
-    #             print("loading files")
-    #     return file_paths
 
     def recognize_multiple(file):
         r = sr.Recognizer()
@@ -123,12 +108,8 @@ def voicerecord():
             audio = r.record(source)  # extract audio data from the file
             print("In Recognize_multiple method")
 
-            # r = sr.Recognizer()
-            # with sr.Microphone() as source:
-            #     print("Say something!")
-            #     audio = r.listen(source)
+
         try:
-            # print("lol")
             print("Transcription: " + r.recognize_google(audio))  # recognize speech using Google Speech Recognition
             sentence = r.recognize_google(audio)
             tokens = list(sentence.lower().split())
@@ -169,12 +150,25 @@ def voicerecord():
         print(result)
     return jsonify(message=result[0])
 
-#Result API
-@app.route('/result', methods=['GET'])
 
 
 #Profile API
 @app.route('/profile',methods=['GET'])
+
+
+#Tutorial API
+@app.route('/tutorial',methods=['GET'])
+def tutorial():
+    response = voicerecord()
+    if response.result == "WR":
+        print("Word Repition")
+    elif response.result == "PR":
+        print("Word Repition")
+    else:
+        print("Word")
+    return
+
+
 
 
 #database models
@@ -197,4 +191,4 @@ users_schema = UserSchema(many=True)
 
 
 if _name_ == '_main_':
-    app.run()
+    app.run(host='0.0.0.0', port=8080)
