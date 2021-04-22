@@ -20,17 +20,17 @@ const tuteFive = () => {
       <View>
       <YoutubePlayer
         height={300}
-        play={true}
+        play={false}
         videoId={'F6tEygVuy1Y'}
       />
       <YoutubePlayer
         height={300}
-        play={true}
+        play={false}
         videoId={'EBIjCAwbJSE'}
       />
       <YoutubePlayer
         height={300}
-        play={true}
+        play={false}
         videoId={'dj4IQl7h1FM'}
       />
      </View>

@@ -20,17 +20,17 @@ const tuteTwo = () => {
       <View>
       <YoutubePlayer
         height={300}
-        play={true}
+        play={false}
         videoId={'Po-WMo8vXRY'}
       />
       <YoutubePlayer
         height={300}
-        play={true}
+        play={false}
         videoId={'iWn1CkIU_rc'}
       />
       <YoutubePlayer
         height={300}
-        play={true}
+        play={false}
         videoId={'d7TPbJ6Dtd0'}
       />
      </View>

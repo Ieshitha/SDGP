@@ -27,13 +27,14 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="VoiceRec">
+      <Stack.Navigator initialRouteName="VoiceRec" headerMode={false}>
         <Stack.Screen name="Start" component={StartScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name="SignIn" component={SignInScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="Tutorials" component={TutorialScreen} />
+        <Stack.Screen name="Recorder" component={RecorderScreen} />
         <Stack.Screen name="VoiceRec" component={VoiceRecScreen} />
         <Stack.Screen name="Loading" component={LoadingScreen} />
         <Stack.Screen name="TuteOne" component={TuteOneScreen} />
