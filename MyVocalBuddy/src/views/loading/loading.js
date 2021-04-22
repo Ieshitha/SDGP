@@ -4,32 +4,32 @@ import { StyleSheet, Button, View, SafeAreaView, Text, Alert, Image } from 'reac
 const Separator = () => (
     <View style={styles.separator} />
 );
-const [type, setType] = useState("");
-const [loading, setLoading] = useState(false);
+// const [type, setType] = useState("");
+// const [loading, setLoading] = useState(false);
 
-const handleSubmit = () => {
+// const handleSubmit = () => {
     
-    setLoading(true);
-    let obj = {type: type};
-    console.log(obj);
-    navigation.navigate("Home")
-    fetch(APP_DOMAIN + "Loading", {
-        method: "GET",
-        headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-        body: JSON.stringify({
-            "type":obj.type,
-        })
-    })
-        .then(res => {
-            console.log(res);
-        }).catch(err => {
-            alert(JSON.stringify(err));
-            console.log('Error -', err, err.message);
-        });
-    }
+//     setLoading(true);
+//     let obj = {type: type};
+//     console.log(obj);
+//     navigation.navigate("Home")
+//     fetch(APP_DOMAIN + "Loading", {
+//         method: "GET",
+//         headers: {
+//         Accept: 'application/json',
+//         'Content-Type': 'application/json',
+//       },
+//         body: JSON.stringify({
+//             "type":obj.type,
+//         })
+//     })
+//         .then(res => {
+//             console.log(res);
+//         }).catch(err => {
+//             alert(JSON.stringify(err));
+//             console.log('Error -', err, err.message);
+//         });
+//     }
 
 const Loading = ({ navigation }) => (
     <SafeAreaView style={styles.container}>
