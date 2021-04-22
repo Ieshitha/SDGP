@@ -1,2 +1,7 @@
 // export const APP_DOMAIN = "http://10.0.2.2:5000/"
 export const APP_DOMAIN ="http://ec2-15-206-90-1.ap-south-1.compute.amazonaws.com:8080/"
+export const WR ="Word Repetition"
+export const PR ="Phrase Repetition"
+export const  I = "Integration"
+export const P = "Prolongation"
+export const SR = "Sound Repetition"
