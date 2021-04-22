@@ -6,7 +6,7 @@ const Separator = () => (
   <View style={styles.separator} />
 );
 
-const App = () => (
+const Tutorials = () => (
   <SafeAreaView style={styles.container}>
     <View>
       <Text style={[styles.title1,styles.setColorB,styles.setFontSize]}>
