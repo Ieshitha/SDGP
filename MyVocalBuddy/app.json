@@ -1,0 +1,12 @@
+{
+  "name": "MyVocalBuddy",
+  "displayName": "MyVocalBuddy",
+  "expo": {
+    "name": "MyVocalBuddy",
+    "slug": "MyVocalBuddy",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
