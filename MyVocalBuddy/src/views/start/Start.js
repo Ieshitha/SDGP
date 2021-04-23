@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
@@ -7,8 +7,9 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  Image
 } from "react-native";
-import { Image,Input } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import { APP_DOMAIN } from '../../util/Constants';
 
 // import { withSafeAreaInsets } from "react-native-safe-area-context";
@@ -19,18 +20,20 @@ const handleGuestSubmit = () => {
   navigation.navigate("Home");
 }
         
-        
+useEffect(() => {
+  setTimeout(() => {navigation.navigate("SignIn")}, 5000)
+});   
 return (
   
-  <View style={styles.container}>
-     <View style={{flexDirection:"row"}}>
-     <View style={{flexDirection:"column"}}>
+  <View style={styles.container} >
+     <View>
+     <View >
      <Text style={styles.inputView}>My Vocal Buddy</Text>
      <Text style={styles.inputViewOne}>To Witness your dream</Text>
     </View>
     <Image
   source={require('../../assets/logo.jpeg')}
-    style={styles.image} />
+    style={styles.image}  />
     </View>
   </View>
 );
@@ -54,8 +57,8 @@ image: {
 inputView: {
   // backgroundColor: "#e6e6e6",
   borderRadius: 10,
-  width: "30%",
-  height: 300,
+  // width: "30%",
+  height: 100,
   marginTop: 50,
   marginBottom: 10,
   fontSize: 25,
@@ -70,7 +73,7 @@ inputViewOne: {
   // width: "30%",
   // height: 300,
   // marginTop: 10,
-  // marginBottom: 10,
+  marginBottom: 10,
   fontSize: 15,
   alignItems: "center",
   color:"#ffffff",

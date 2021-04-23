@@ -57,7 +57,7 @@ export default class VoiceRec extends React.Component {
     // console.log("NNNN0",file)
     alert('Are you sure you want to submit');
     this.setState({ loading: true })
-
+console.log("dsfd",this.state.data)
     fetch(APP_DOMAIN + "voicerecord", {
       method: "POST",
       headers: {
@@ -70,7 +70,6 @@ export default class VoiceRec extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         this.setState({ stutterType: data.message, loading: false })
       })
       .catch(err => {
@@ -102,26 +101,7 @@ export default class VoiceRec extends React.Component {
       console.warn(err);
       return;
     }
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
-        {
-          title: 'Permissions for write access',
-          message: 'Give permission to your storage to write a file',
-          buttonPositive: 'ok',
-        },
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the camera');
-      } else {
-        console.log('permission denied');
-        return;
-      }
-    } catch (err) {
-      console.warn(err);
-      return;
-
-    }
+    
     // const p = await Permissions.check('microphone');
     // console.log('permission check', p);
     // if (p === 'authorized') return;

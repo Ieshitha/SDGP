@@ -6,9 +6,10 @@ import {
   View,
   TextInput,
   Button,
+  Image,
   TouchableOpacity,
 } from "react-native";
-import { Image,Input } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import { APP_DOMAIN } from '../../util/Constants';
 
 // import { withSafeAreaInsets } from "react-native-safe-area-context";
@@ -53,7 +54,7 @@ fetch(APP_DOMAIN + "login", {
 }
 
 const handleGuestSubmit = () => {
-  navigation.navigate("Home");
+  navigation.navigate("SignUp");
 }
         
         
@@ -61,26 +62,27 @@ return (
   
   <View style={styles.container}>
     <Image
-  source={require('../../assets/logo.jpeg')}
-    style={styles.image} />
+      source={require('../../assets/logo.jpeg')}
+    style={styles.image} 
+    />
     
    
     <View style={styles.inputView}>
     <View style={styles.inputViewOne}>
-      <TextInput>Text</TextInput>
-      <TextInput>Text</TextInput>
+      <TextInput>Sign</TextInput>
+      <TextInput>In</TextInput>
       </View>
       <Input
         style={styles.TextInput}
         placeholder="Username"
-        placeholderTextColor="##B1A2A2"
+        placeholderTextColor="#B1A2A2"
         onChangeText={(email) => setEmail(email)}
       />
   
       <Input
         style={styles.TextInput}
         placeholder="Password"
-        placeholderTextColor="##B1A2A2"
+        placeholderTextColor="#B1A2A2"
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
       />
@@ -97,7 +99,7 @@ return (
     {/* </View> */}
    
 <View style={{flexDirection:'column'}}>
-      <Text>New User? </Text>
+      {/* <Text>New User? </Text> */}
       <TouchableOpacity>
       <Text style={styles.forgot_button} onPress={handleGuestSubmit}>Sign Up</Text>
     </TouchableOpacity>

@@ -31,25 +31,25 @@ const Home = ({ navigation }) => (
             <Button
                 title="Identify Stuttering"
                 color="#396F81"
-                onPress={() => Alert.alert('Button with adjusted color pressed')}
+                onPress={() =>  navigation.navigate("VoiceRec")}
             />
         </View>
         <Separator />
-        <View>
+        {/* <View>
             <Button
                 title="Monitor Patients Current Progress"
                 color="#3E999E"
                 onPress={(e) => Alert.alert('Cannot press this one')}
             />
-        </View>
-        <Separator />
-        <View>
+        </View> */}
+        {/* <Separator /> */}
+        {/* <View>
             <Button
                 title="Patients Personal Details"
                 color="#54BD8A"
                 onPress={() => Alert.alert('Cannot press this one')}
             />
-        </View>
+        </View> */}
         <Separator />
         <View>
             <Button
@@ -74,7 +74,7 @@ const Home = ({ navigation }) => (
                 title="Log out"
                 color="#33DCD2"
                 onPress={() => (
-                    navigation.navigate("About"))}
+                    navigation.navigate("SignIn"))}
             />
         </View>
         <Separator />
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         backgroundColor: '#270264',
-        marginHorizontal: 16,
+        // marginHorizontal: 16,
     },
     title: {
         textAlign: 'center',

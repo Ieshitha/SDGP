@@ -6,9 +6,10 @@ import {
   View,
   TextInput,
   Button,
+  Image,
   TouchableOpacity,
 } from "react-native";
-import { Image,Input } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import { APP_DOMAIN } from '../../util/Constants';
 
 // import { withSafeAreaInsets } from "react-native-safe-area-context";
@@ -79,8 +80,8 @@ return (
    
     <View style={styles.inputView}>
     <View style={styles.inputViewOne}>
-      <TextInput>Text</TextInput>
-      <TextInput>Text</TextInput>
+      <TextInput>Sign</TextInput>
+      <TextInput>Up</TextInput>
       </View>
       {/* <Input
         style={styles.TextInput}
@@ -106,7 +107,7 @@ return (
                 />
     <Input
                     style={styles.TextInput}
-                    placeholder='Age:'
+                    placeholder='Password :'
                     secureTextEntry={true}
                     autoCapitalize="none"
                     placeholderTextColor='#B1A2A2'
