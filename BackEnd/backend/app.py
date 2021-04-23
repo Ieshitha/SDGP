@@ -152,25 +152,6 @@ def voicerecord():
 
 
 
-#Profile API
-@app.route('/profile',methods=['GET'])
-
-
-#Tutorial API
-@app.route('/tutorial',methods=['GET'])
-def tutorial():
-    response = voicerecord()
-    if response.result == "WR":
-        print("Word Repition")
-    elif response.result == "PR":
-        print("Word Repition")
-    else:
-        print("Word")
-    return
-
-
-
-
 #database models
 class User(db.Model):
     tablename ='Users'
